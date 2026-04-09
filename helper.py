@@ -143,7 +143,6 @@ def hour_activity_map(selected_user, df):
 
     return hour_count
 
-#sentiment analysis
 
 def sentiment_analysis(selected_user, df):
     if selected_user != 'Overall':
