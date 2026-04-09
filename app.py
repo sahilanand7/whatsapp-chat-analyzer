@@ -7,11 +7,9 @@ plt.rcParams['font.family'] = 'Segoe UI Emoji'
 import plotly.express as px
 
 
-import seaborn as sns
-# sns.set(style='whitegrid')   # old
-
-st.markdown('# _Welcome to Whatsapp Chat Analysis:_')
 st.set_page_config(page_title='Whatsapp Chat Analysis',layout='wide',page_icon='📈',initial_sidebar_state='expanded')
+st.markdown('# _Welcome to Whatsapp Chat Analysis:_')
+
 
 st.sidebar.title('Whatsapp Chat Analyzer')
 
@@ -20,8 +18,6 @@ if uploaded_file is not None:
     bytes_data = uploaded_file.getvalue()
     data = bytes_data.decode("utf-8")
     df = preprocessor.preprocess(data)
-
-    # st.dataframe(df)
 
     # Fetch unique users
     userlist = df['user'].unique().tolist()
@@ -35,8 +31,9 @@ if uploaded_file is not None:
     if st.sidebar.button('Show Analysis'):
         num_messages,words,num_of_media,num_of_links = helper.fetch_stats(selected_user,df)
         st.title('Top Statistics')
-        col1, col2, col3, col4 = st.columns(4)
-
+        # col1, col2, col3, col4 = st.columns(4)
+        col1, col2 = st.columns(2)
+        col3, col4 = st.columns(2)
         with col1:
             st.header('Total Messages')
             st.title(num_messages)
@@ -76,7 +73,6 @@ if uploaded_file is not None:
         )
 
         fig.update_xaxes(tickangle=90)
-        # st.plotly_chart(fig, use_container_width=True)
         st.plotly_chart(fig, use_container_width=True, config={'displayModeBar': 'hover'})
 
 
@@ -87,7 +83,6 @@ if uploaded_file is not None:
         with col1:
             busy_day = helper.week_activity_map(selected_user,df)
 
-            # Create an interactive bar chart
             fig = px.bar(
                 busy_day,
                 x=busy_day.index,
@@ -97,7 +92,9 @@ if uploaded_file is not None:
             fig.update_layout(
                 title_x = 0.5,
                 xaxis_title='Day of the Week',
-                yaxis_title='Number of Activities'
+                yaxis_title='Number of Activities',
+                autosize=True,
+                margin=dict(l=10, r=10, t=40, b=10)
             )
 
             fig.update_xaxes(tickangle=90)
@@ -117,10 +114,12 @@ if uploaded_file is not None:
             fig.update_layout(
                 title_x=0.5,
                 xaxis_title='Hour of Day',
-                yaxis_title='Number of Messages'
+                yaxis_title='Number of Messages',
+                autosize=True,
+                margin=dict(l=10, r=10, t=40, b=10)
             )
 
-        st.plotly_chart(fig, use_container_width=True, config={'displayModeBar': 'hover'})
+            st.plotly_chart(fig, use_container_width=True, config={'displayModeBar': 'hover'})
 
 
         # 5. finding the busiest user in the grp (group level)
@@ -139,7 +138,9 @@ if uploaded_file is not None:
                 )
                 fig.update_layout(
                     xaxis_title='Users',
-                    yaxis_title='Number of Activities'
+                    yaxis_title='Number of Activities',
+                    autosize=True,
+                    margin=dict(l=10, r=10, t=40, b=10)
                 )
 
                 fig.update_xaxes(tickangle=90)
@@ -151,7 +152,7 @@ if uploaded_file is not None:
         # Wordcloud
         st.title('Frequency of Words:')
         df_wc = helper.create_word_cloud(selected_user,df)
-        fig,ax = plt.subplots()
+        fig,ax = plt.subplots(figsize=(6,4))
         ax.imshow(df_wc)
         st.pyplot(fig)
 
@@ -171,7 +172,9 @@ if uploaded_file is not None:
             title_x = 0.5,
             xaxis_title='Words',
             yaxis_title='Number of Activities',
-            yaxis=dict(autorange="reversed")
+            yaxis=dict(autorange="reversed"),
+            autosize=True,
+            margin=dict(l=10, r=10, t=40, b=10)
         )
 
         fig.update_xaxes(tickangle=90)
@@ -181,34 +184,12 @@ if uploaded_file is not None:
         # emoji analysis
         emoji_df = helper.emoji_helper(selected_user,df)
         st.title('Emoji Analysis:')
-        col1,col2 = st.columns(2)
 
-        with col1:
-            st.dataframe(emoji_df)
+        st.subheader("Emoji Table")
+        st.dataframe(emoji_df, use_container_width=True)
 
-        with col2:
-            top_emoji_df = emoji_df.head(10)
-
-            fig = px.bar(
-                top_emoji_df,
-                x=top_emoji_df.columns[1],
-                y=top_emoji_df.columns[0],
-                color=top_emoji_df.columns[0],  # Each emoji has a distinct color
-                color_discrete_sequence=[
-                    '#17bcef', '#f39c12', '#27ae60', '#8e44ad', '#e74c3c',
-                    '#3498db', '#f1c40f', '#1abc9c', '#d35400', '#2ecc71'
-                ],
-                title='Top Emojis'
-            )
-
-            fig.update_layout(
-                title_x = 0.5,
-                xaxis_title='Count',
-                yaxis_title='Emoji',
-                # height = 450,
-                margin=dict(l=50, r=20, t=40, b=20)
-            )
-            st.plotly_chart(fig, use_container_width=True, config={'displayModeBar': 'hover'})
+        st.subheader("Top Emojis")
+        st.plotly_chart(fig, use_container_width=True)
 
 
         # Sentiment Analysis
@@ -231,7 +212,9 @@ if uploaded_file is not None:
         fig.update_layout(
             title_x=0.5,
             xaxis_title='Sentiment',
-            yaxis_title='Count'
+            yaxis_title='Count',
+            autosize=True,
+            margin=dict(l=10, r=10, t=40, b=10)
         )
 
         st.plotly_chart(fig, use_container_width=True)
@@ -257,18 +240,17 @@ if uploaded_file is not None:
             title_x=0.5,
             xaxis_title='Months',
             yaxis_title='Number of Activities',
-            xaxis=dict(rangeslider=dict(visible=True))
+            xaxis=dict(rangeslider=dict(visible=True)),
+            autosize=True,
+            margin=dict(l=10, r=10, t=40, b=10)
         )
 
         st.plotly_chart(fig, use_container_width=True, config={'displayModeBar': 'hover'})
 
         # Sentiment by User
-
         if selected_user == 'Overall':
             st.title('User Sentiment Analysis')
             user_sent_df = helper.sentiment_by_user(df)
-
-            # st.dataframe(user_sent_df)
 
             fig = px.bar(
                 user_sent_df,
@@ -283,13 +265,17 @@ if uploaded_file is not None:
                 }
             )
 
-            fig.update_layout(title_x=0.5)
+            fig.update_layout(
+                title_x=0.5,
+                autosize=True,
+                margin=dict(l=10, r=10, t=40, b=10)
+            )
             fig.update_xaxes(tickangle=90)
 
             st.plotly_chart(fig, use_container_width=True, config={'displayModeBar': 'hover'})
 
 
-
+        # Insights
         if selected_user == 'Overall':
             st.title('Key Insights')
             user_sent_df = helper.sentiment_by_user(df)
