@@ -188,8 +188,30 @@ if uploaded_file is not None:
         st.subheader("Emoji Table")
         st.dataframe(emoji_df, use_container_width=True)
 
-        st.subheader("Top Emojis")
-        st.plotly_chart(fig, use_container_width=True)
+        if not emoji_df.empty:
+            emoji_df.columns = ['emoji', 'count']
+
+            top_emoji_df = emoji_df.head(10)
+
+            fig = px.bar(
+                top_emoji_df,
+                x='count',
+                y='emoji',
+                orientation='h',
+                title='Top Emojis'
+            )
+
+            fig.update_layout(
+                title_x=0.5,
+                xaxis_title='Count',
+                yaxis_title='Emoji',
+                
+                margin=dict(l=20, r=20, t=40, b=20)
+            )
+
+            st.plotly_chart(fig, use_container_width=True)
+        else:
+            st.write("No emojis found")
 
 
         # Sentiment Analysis
