@@ -129,20 +129,20 @@ if uploaded_file is not None:
 
             with col1:
                 x, new_df = helper.most_busy_users(df)
-            
+
                 bar_df = x.reset_index()
                 bar_df.columns = ['user', 'count']
                 bar_df['user'] = bar_df['user'].astype(str)
-            
+
                 fig = px.bar(bar_df, x='user', y='count', color_discrete_sequence=['#bdc3c7'])
                 fig.update_layout(
                     xaxis_title='Users',
                     yaxis_title='Number of Messages'
                 )
                 fig.update_xaxes(type='category', tickangle=90)
-            
+
                 st.plotly_chart(fig, use_container_width=True, config={'displayModeBar': 'hover'})
-            
+
             with col2:
                 st.dataframe(new_df, use_container_width=True)
 
@@ -202,7 +202,7 @@ if uploaded_file is not None:
                 title_x=0.5,
                 xaxis_title='Count',
                 yaxis_title='Emoji',
-                
+
                 margin=dict(l=20, r=20, t=40, b=20)
             )
 
@@ -271,6 +271,8 @@ if uploaded_file is not None:
             st.title('User Sentiment Analysis')
             user_sent_df = helper.sentiment_by_user(df)
 
+            user_sent_df.index = user_sent_df.index.astype(str)
+
             fig = px.bar(
                 user_sent_df,
                 x=user_sent_df.index,
@@ -289,10 +291,10 @@ if uploaded_file is not None:
                 autosize=True,
                 margin=dict(l=10, r=10, t=40, b=10)
             )
-            fig.update_xaxes(tickangle=90)
+
+            fig.update_xaxes(type='category', tickangle=90)
 
             st.plotly_chart(fig, use_container_width=True, config={'displayModeBar': 'hover'})
-
 
         # Insights
         if selected_user == 'Overall':
