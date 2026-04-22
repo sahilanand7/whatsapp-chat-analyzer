@@ -22,3 +22,6 @@ ChatInsight is a web app that analyzes WhatsApp chats and shows useful insights 
 - Matplotlib
 - WordCloud
 - TextBlob
+
+## Live App
+https://chatinsight-app.streamlit.app/
