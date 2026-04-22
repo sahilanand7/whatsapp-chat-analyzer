@@ -34,6 +34,14 @@ pip install -r requirements.txt
 Run the app:
 streamlit run app.py
 
+## Screenshots
+
+![Query Analyzer](images/queryAnalyzer.png)
+![Word Cloud](images/wordcloud.png)
+![Activity Chart](images/activity.png)
+![Dashboard](images/basicStats.png)
+![Sentiment](images/sentiment.png)
+
 ## Author
 Sahil Anand
 
