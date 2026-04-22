@@ -1,12 +1,15 @@
+import nltk
+nltk.download('punkt', quiet=True)
+
 from urlextract import URLExtract
+extractor = URLExtract()
+
 from wordcloud import WordCloud
 import pandas as pd
 from collections import Counter
 import emoji
 from textblob import TextBlob
 import re
-
-extractor = URLExtract()
 
 
 def fetch_stats(selected_user, df):
