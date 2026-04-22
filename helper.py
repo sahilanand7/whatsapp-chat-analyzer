@@ -1,6 +1,3 @@
-import nltk
-nltk.download('punkt', quiet=True)
-
 from urlextract import URLExtract
 extractor = URLExtract()
 
