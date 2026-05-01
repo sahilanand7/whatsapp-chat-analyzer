@@ -12,7 +12,6 @@ ChatInsight is a web app that analyzes WhatsApp chats and shows useful insights 
 - Most common words
 - Emoji analysis
 - Sentiment analysis
-- Smart query analyzer
 
 ## Tech Stack
 - Python
@@ -35,8 +34,6 @@ Run the app:
 streamlit run app.py
 
 ## Screenshots
-
-![Query Analyzer](images/queryAnalyzer.png)
 ![Word Cloud](images/wordcloud.png)
 ![Activity Chart](images/activity.png)
 ![Dashboard](images/basicStats.png)
