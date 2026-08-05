@@ -66,8 +66,17 @@ def create_word_cloud(selected_user, df):
 
     temp['message'] = temp['message'].apply(clean_text)
 
+    text = " ".join(
+        temp['message']
+        .dropna()
+        .astype(str)
+        .str.strip()
+    )
+    if not text:
+        return None
+
     wc = WordCloud(width=500, height=400, min_font_size=10, background_color='white')
-    return wc.generate(temp['message'].str.cat(sep=' '))
+    return wc.generate(text)
 
 
 def most_comm_words(selected_user, df):
