@@ -155,10 +155,13 @@ if uploaded_file is not None:
         st.title('Frequency of Words:')
         df_wc = helper.create_word_cloud(selected_user, df)
 
-        fig, ax = plt.subplots(figsize=(6, 4))
-        ax.imshow(df_wc)
-        ax.axis('off') 
-        st.pyplot(fig)
+        if df_wc is None:
+            st.info("No valid words available to generate a word cloud.")
+        else:
+            fig, ax = plt.subplots(figsize=(6, 4))
+            ax.imshow(df_wc)
+            ax.axis('off')  # FIX (UI)
+            st.pyplot(fig)
 
         # Most Common words
         st.title('Most Common Words')
