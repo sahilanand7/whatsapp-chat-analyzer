@@ -157,7 +157,7 @@ if uploaded_file is not None:
 
         fig, ax = plt.subplots(figsize=(6, 4))
         ax.imshow(df_wc)
-        ax.axis('off')  # FIX (UI)
+        ax.axis('off') 
         st.pyplot(fig)
 
         # Most Common words
@@ -166,8 +166,6 @@ if uploaded_file is not None:
 
         fig = px.bar(
             most_comm_df,
-            # x=most_comm_df[1],
-            # y=most_comm_df[0],
             x='word',
             y='count',
             orientation='h',
@@ -177,14 +175,13 @@ if uploaded_file is not None:
 
         fig.update_layout(
             title_x=0.5,
-            xaxis_title='Words',
-            yaxis_title='Number of Activities',
+            xaxis_title='Number of Activities',
+            yaxis_title='Words',
             yaxis=dict(autorange="reversed"),
             autosize=True,
             margin=dict(l=10, r=10, t=40, b=10)
         )
 
-        # fig.update_xaxes(tickangle=90)
         st.plotly_chart(fig, use_container_width=True, config={'displayModeBar': 'hover'})
 
         # Emoji
