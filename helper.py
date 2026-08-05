@@ -91,10 +91,7 @@ def most_comm_words(selected_user, df):
             if word not in stop_words and len(word) > 2:
                 words.append(word)
 
-    # return pd.DataFrame(Counter(words).most_common(15))
-    return pd.DataFrame(
-    Counter(words).most_common(15),
-    columns=['word', 'count']
+    return pd.DataFrame(Counter(words).most_common(15))
 )
 
 
