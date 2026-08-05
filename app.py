@@ -166,8 +166,8 @@ if uploaded_file is not None:
 
         fig = px.bar(
             most_comm_df,
-            x='word',
-            y='count',
+            x='count',
+            y='word',
             orientation='h',
             title='Frequent Words (15)',
             color_discrete_sequence=['#636EFA']
