@@ -23,7 +23,7 @@ ChatInsight is a web app that analyzes WhatsApp chats and shows useful insights 
 - TextBlob
 
 ## Live App
-https://chatinsight-app.streamlit.app/
+https://chatinsight3.streamlit.app/
 
 ## How to Run
 
